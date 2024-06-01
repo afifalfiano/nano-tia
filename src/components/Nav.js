@@ -5,7 +5,6 @@ const Nav = () => {
     <nav>
       <ul>
         <li><Link to='/'>Home</Link></li>
-        <li><Link to={`/post/${Math.floor(Math.random() * 10) + 1}`}>Detail Sample</Link></li>
       </ul>
     </nav>
   )

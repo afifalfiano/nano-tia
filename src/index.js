@@ -8,8 +8,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import {Routes} from './routes';
-
-
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

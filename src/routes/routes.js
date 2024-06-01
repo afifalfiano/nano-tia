@@ -11,7 +11,7 @@ const Routes = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/post/:id',
+    path: '/post/:slug',
     element: <DetailPost />,
     errorElement: <ErrorPage />,
   },
