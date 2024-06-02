@@ -1,31 +1,20 @@
-import { flushSync } from "react-dom";
-import { useNavigate } from "react-router-dom";
+import useNavigateWithTransition from "../hooks/useNavigateWithTransitions";
 
 const NavLink = ({children, to}) => {
-
-  const navigate = useNavigate();
+  const {goToPath, location} = useNavigateWithTransition()
+  const {pathname} = location;
   const goTo = (ev) => {
       ev.preventDefault();
-      document.startViewTransition(() => {
-        flushSync(() => {
-          navigate(to);
-        });
-      });
+      goToPath(to);
   }
   
   return (
-    <nav>
-      <a
-      href={to}
-      onClick={(ev) => goTo(ev) }
-    >
-      <ul>
-        <li>
+      <li className="nav-item">
+        <a className={`nav-link ${pathname === to && 'active'}`} href={to} onClick={(ev) => goTo(ev)}>
         {children}
-        </li>
-      </ul>
-    </a>
-    </nav>
+        </a>
+      </li>
+
   )
 }
 

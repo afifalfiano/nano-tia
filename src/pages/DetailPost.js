@@ -1,9 +1,11 @@
-import { Nav, PayWallContent, Seo, withPayWall } from '../components';
+import { PayWallContent, Seo, withPayWall } from '../components';
 import { useEffect, useRef, useState } from 'react';
 import data from '../mocks/data.json';
 import { createPortal } from 'react-dom';
 import { addToFavorit, selectFavoritArticles, removeFromFavorit } from '../store/features/favorit-articles/favoritArticlesSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from './DetailPost.module.css'
+import Comment from '../components/Comment';
 
 const DetailPost = ({
   ids,
@@ -90,7 +92,7 @@ const DetailPost = ({
   
 
   return (
-    <div style={{padding: '32px'}}>
+    <div className={`${styles['detail-post']} container py-5`}>
         <Seo
         title={post?.seo?.title}
         description={post?.seo?.description}
@@ -101,16 +103,15 @@ const DetailPost = ({
         url={post?.link}
         prioritizeSeoTags={true}
         />
-      {!isAddedFavorit ? <button onClick={() => doAddToFavorit()}>Add to Favorit</button> : <button type="button" onClick={() => doRemoveFromFavorit()}>Remove from Favorit</button>}
-      <p>Detail Post {post?.title} {id}</p>
-      <p>Total Current Limit: {total}</p>
-      <p>Ids: {JSON.stringify(ids)}</p>
-      <div id='content' dangerouslySetInnerHTML={{__html: lazyPost}}></div>
+      <h1>Detail Post {post?.title}</h1>
+      {!isAddedFavorit ? <button onClick={() => doAddToFavorit()} className='btn btn-primary'>Add to Favorit</button> : <button type="button" className='btn btn-danger' onClick={() => doRemoveFromFavorit()}>Remove from Favorit</button>}
+      <div className='mt-5' id='content' dangerouslySetInnerHTML={{__html: lazyPost}}></div>
       {(!limitReached || (limitReached && cacheContent)) && lazyPost?.length < post?.content?.length && <div id='last-content' ref={refRead}>Please Scroll</div>}
       {showModal && createPortal(
         <PayWallContent onClose={() => setShowModal(false)} />,
         document.body
       )}
+      <Comment post={post || []} />
     </div>
   )
 }
