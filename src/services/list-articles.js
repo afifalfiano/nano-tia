@@ -13,7 +13,7 @@ export const listArticlesApi = createApi({
   mode: 'no-cors',
   endpoints: (builder) => ({
     getPostLists: builder.query({
-      query: () => PATH_API.POSTS,
+      query: (params = {page: 1, perPage: 10}) => `${PATH_API.POSTS}?page=${params?.page}&per_page=${params?.perPage}`,
       keepUnusedDataFor: 5,
     }),
   }),

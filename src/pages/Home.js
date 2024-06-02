@@ -1,6 +1,4 @@
-
-import { Helmet } from 'react-helmet-async';
-import { Nav } from '../components';
+import { Nav, Seo } from '../components';
 // import { useGetPostListsQuery } from '../services/list-articles';
 import data from '../mocks/data.json';
 import { useEffect, useRef, useState } from 'react';
@@ -9,8 +7,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  // const { data, error, isLoading } = useGetPostListsQuery();
-  // console.log(data, error, isLoading);
+  // const { data: datas, error, isLoading } = useGetPostListsQuery({page: 1, perPage: 20});
+  // console.log(datas, error, isLoading);
   const [response, setResponse] = useState(data || []);
   const [responseLocal, setResponseLocal] = useState([...response?.posts?.slice(0, 10)] || []);
   const refTarget = useRef(null);
@@ -39,18 +37,22 @@ const Home = () => {
     const [entry] = entries;
     const isLastItem = entry?.target?.id === 'last-item';
     if (entry.isIntersecting && isLastItem) {
-      setResponseLocal(prev => {
-        const data = removeDuplicate([
-          ...prev,
-          ...response?.posts?.slice(prev?.length, prev?.length + 10)
-        ])
-        return data
-      })
+      infiniteScroll();
     }
   }
 
+  const infiniteScroll = () => {
+    setResponseLocal(prev => {
+      const data = removeDuplicate([
+        ...prev,
+        ...response?.posts?.slice(prev?.length, prev?.length + 10)
+      ])
+      return data
+    })
+  }
+
   console.log(removeDuplicate(response?.posts), 'full');
-  console.log(responseLocal, 'local');
+  // console.log(responseLocal, 'local');
 
 
   const navigate = useNavigate();
@@ -61,13 +63,15 @@ const Home = () => {
 
   return (
     <div style={{padding: '32px'}}>
-      <Helmet prioritizeSeoTags>
-        <title>Nano TIA</title>
-        <link rel="notImportant" href="https://www.chipotle.com" />
-        <meta name="whatever" value="notImportant" />
-        <link rel="canonical" href="https://www.tacobell.com" />
-        <meta property="og:title" content="A very important title"/>
-      </Helmet>
+      <Seo
+      title="Nano TIA"
+      description="Nano TIA"
+      type="website"
+      name="Anonymous"
+      image="./default-image.png"
+      canonical="/"
+      prioritizeSeoTags={true}
+      />
       <Nav />
       <p>Home Page</p>
       {responseLocal?.map((post, idx) => {

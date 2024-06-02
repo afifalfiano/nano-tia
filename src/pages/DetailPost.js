@@ -1,54 +1,97 @@
-import {useParams} from 'react-router-dom';
-import { Nav } from '../components';
-import { Helmet } from 'react-helmet-async';
-import {useDispatch, useSelector} from 'react-redux';
-import { selectReadLimit, decrementLimitById } from '../store/features/read-limit/readLimitSlice';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from "react-router-dom";
+import { Nav, PayWallContent, Seo, withPayWall } from '../components';
+import { useEffect, useRef, useState } from 'react';
 import data from '../mocks/data.json';
+import { createPortal } from 'react-dom';
 
-const DetailPost = () => {
-  const { slug } = useParams();
-  let [searchParams] = useSearchParams();
-  const id = searchParams.get('id');
+const DetailPost = ({
+  ids,
+  id,
+  total,
+  slug,
+  limitReached,
+  cacheContent
+}) => {
   const [post, setPost] = useState(data.posts.find(item => +item.id === +id) || null);
+  const [lazyPost, setLazyPost] = useState(post?.content?.slice(0, 2000));
+  const [showModal, setShowModal] = useState(false);
 
-  const {total, ids} = useSelector(selectReadLimit);
-  const dispatch = useDispatch()
- 
-  const decrementReadLimit = () => {
-    const payload = {id: id};
-    dispatch(decrementLimitById(payload));
-  }
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
-    decrementReadLimit();
-    const cacheId = ids.some(data => data === +id);
-    if (!cacheId && total === 0) {
-      alert('Your have reach the limit of read. Please subsribe...');
-    }
-  }, [id, slug])
+    scrollToTop();
+  }, [])
 
-  console.log(post)
+  useEffect(() => {
+    if (limitReached) {
+      console.log('Your have reach the limit of read. Please subscribe...');
+      setShowModal(true);
+      setLazyPost(prev => prev?.slice(0, 2000))
+    }
+  }, [limitReached])
+
+  const refRead = useRef(null);
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1
+    }
+    const observer = new IntersectionObserver(callbackFn, options);
+    if (refRead.current) {
+      observer.observe(refRead.current)
+    };
+
+    return () => {
+      if (refRead.current) {
+        observer.unobserve(refRead.current);
+      }
+    }
+
+  }, [refRead])
+
+  const infiniteScrollContent = () => {
+    setLazyPost(prev => {
+      const content = prev + post.content.slice(prev?.length, prev?.length + 2000);
+      return content;
+    })
+  }
+
+  const callbackFn = (entries) => {
+    const [entry] = entries;
+    const isLastContent = entry?.target?.id === 'last-content';
+    if (entry.isIntersecting && isLastContent) {
+      infiniteScrollContent();
+    }
+  }
+  
 
   return (
     <div style={{padding: '32px'}}>
-      <Helmet prioritizeSeoTags>
-        <title>{post?.seo?.title}</title>
-        <link rel="canonical" href={post?.seo?.canonical_link} />
-        <meta property="og:title" content={post?.seo?.title} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={post.link} />
-        <meta property="og:description" content={post?.seo?.description} />
-        <meta property="og:image" content={post?.seo?.image} />
-      </Helmet>
+        <Seo
+        title={post?.seo?.title}
+        description={post?.seo?.description}
+        type="website"
+        name={post?.author?.display_name}
+        image={post?.seo?.image}
+        canonical={post?.seo?.canonical_link}
+        url={post?.link}
+        prioritizeSeoTags={true}
+        />
       <Nav />
-      <p>Detail Post {post?.title}</p>
+
+      <p>Detail Post {post?.title} {id}</p>
       <p>Total Current Limit: {total}</p>
       <p>Ids: {JSON.stringify(ids)}</p>
-      <div dangerouslySetInnerHTML={{__html: post?.content}}></div>
+      <div id='content' dangerouslySetInnerHTML={{__html: lazyPost}}></div>
+      {(!limitReached || (limitReached && cacheContent)) && lazyPost?.length < post?.content?.length && <div id='last-content' ref={refRead}>Please Scroll</div>}
+      {showModal && createPortal(
+        <PayWallContent onClose={() => setShowModal(false)} />,
+        document.body
+      )}
     </div>
   )
 }
 
-export default DetailPost;
+export default withPayWall(DetailPost);
