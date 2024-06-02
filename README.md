@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+## Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+1. First, clone this project
+2. Second, run command **npm install**
+3. Last, run the project with command **npm run start**
+4. Run production, **npm run build** then **serve -s build**
 
-In the project directory, you can run:
+## APIs
 
-### `npm start`
+* https://www.techinasia.com/wp-json/techinasia/2.0/posts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Description
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The project for showing articles about technology. Here, I build a several feature such as:
 
-### `npm test`
+* Create shared components
+* Create custom hooks for navigation
+* Create infinite scroll on the homepage for articles list and detail article
+* Lazy load images and component
+* Add mark/favorit for the article that you like it
+* State management using react-redux.
+* More ...
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Libraries
 
-### `npm run build`
+There are several libraries in this project:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **bootstrap**: for styling the User Interface
+2. **react-helmet-async**: for SEO optimization such as title, description, image and more.
+3. **@reduxjs/toolkit**: for state management and also hit API
+4. **react-lazy-load-image-component**: for lazy load images and components
+5. **react-router-dom**: for configuration routing on this project
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Web Vital Score
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Website![1717323985991](image/README/1717323985991.png)
+* Mobile
 
-### `npm run eject`
+  ![1717324033894](image/README/1717324033894.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Structure Project
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [package\-lock.json](package-lock.json)
+- [package.json](package.json)
+- __public__
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  - [default\-image.png](public/default-image.png)
+  - [favicon.ico](public/favicon.ico)
+  - [index.html](public/index.html)
+  - [logo192.png](public/logo192.png)
+  - [logo512.png](public/logo512.png)
+  - [manifest.json](public/manifest.json)
+  - [robots.txt](public/robots.txt)
+- __src__
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  - [App.js](src/App.js)
+  - [App.test.js](src/App.test.js)
+  - __common__
+    - [constant.js](src/common/constant.js)
+    - [index.js](src/common/index.js)
+    - [path.js](src/common/path.js)
+  - __components__
+    - [CardList.js](src/components/CardList.js)
+    - [Comment.js](src/components/Comment.js)
+    - [NavLink.js](src/components/NavLink.js)
+    - [Navbar.js](src/components/Navbar.js)
+    - [PayWall.js](src/components/PayWall.js)
+    - [PayWallContent.js](src/components/PayWallContent.js)
+    - [Seo.js](src/components/Seo.js)
+    - [TotalReadLimit.js](src/components/TotalReadLimit.js)
+    - [WrapInfo.js](src/components/WrapInfo.js)
+    - [index.js](src/components/index.js)
+  - __hooks__
+    - [index.js](src/hooks/index.js)
+    - [useNavigateWithTransitions.js](src/hooks/useNavigateWithTransitions.js)
+  - [index.css](src/index.css)
+  - [index.js](src/index.js)
+  - [logo.svg](src/logo.svg)
+  - __mocks__
+    - [data.json](src/mocks/data.json)
+  - __pages__
+    - [DetailPost.js](src/pages/DetailPost.js)
+    - [DetailPost.module.css](src/pages/DetailPost.module.css)
+    - [Error.js](src/pages/Error.js)
+    - [FavoritArticlesPage.js](src/pages/FavoritArticlesPage.js)
+    - [Home.js](src/pages/Home.js)
+  - [reportWebVitals.js](src/reportWebVitals.js)
+  - __routes__
+    - [index.js](src/routes/index.js)
+    - [routes.js](src/routes/routes.js)
+  - __services__
+    - [list\-articles.js](src/services/list-articles.js)
+  - [setupTests.js](src/setupTests.js)
+  - __store__
+    - __features__
+      - __favorit\-articles__
+        - [favoritArticlesSlice.js](src/store/features/favorit-articles/favoritArticlesSlice.js)
+      - __read\-limit__
+        - [readLimitSlice.js](src/store/features/read-limit/readLimitSlice.js)
+    - [store.js](src/store/store.js)
+  - __utils__
+    - [convertDate.js](src/utils/convertDate.js)
+    - [index.js](src/utils/index.js)
+    - [removeDuplicate.js](src/utils/removeDuplicate.js)
 
-## Learn More
+## Showcase
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Home
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  ![1717324145927](image/README/1717324145927.png)
+* Favorit
 
-### Code Splitting
+  ![1717324136212](image/README/1717324136212.png)
+* Detail + Comments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  ![1717324164202](image/README/1717324164202.png)
+* Paywall
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  ![1717324196765](image/README/1717324196765.png)
