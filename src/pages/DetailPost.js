@@ -17,7 +17,7 @@ const DetailPost = ({
 }) => {
   const [post, setPost] = useState(data.posts.find(item => +item.id === +id) || null);
   const [lazyPost, setLazyPost] = useState(post?.content?.slice(0, 2000));
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const {articles} = useSelector(selectFavoritArticles);
   const dispatch = useDispatch()
