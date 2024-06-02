@@ -20,7 +20,7 @@ const Comment = ({post}) => {
                 alt={comment?.author?.display_name}
                 loading='lazy'
                 className='rounded-circle img-fluid img-responsive'
-                placeholdersrc={'/default-image.png'}
+                placeholderSrc={'/default-image.png'}
                 effect="blur"
                 width={'28px'} 
                 height={'28px'}

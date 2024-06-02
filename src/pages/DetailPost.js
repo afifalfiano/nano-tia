@@ -6,6 +6,7 @@ import { addToFavorit, selectFavoritArticles, removeFromFavorit } from '../store
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './DetailPost.module.css'
 import Comment from '../components/Comment';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 
 const DetailPost = ({
   ids,
@@ -111,7 +112,9 @@ const DetailPost = ({
         <PayWallContent onClose={() => setShowModal(false)} />,
         document.body
       )}
-      <Comment post={post || []} />
+      <LazyLoadComponent>
+        <Comment post={post || []} />
+      </LazyLoadComponent>
     </div>
   )
 }

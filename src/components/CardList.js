@@ -22,7 +22,7 @@ const CardList = forwardRef((props, ref) => {
                 backgroundSize: 'cover'
               }}
               className='img-responsive rounded-start w-100'
-              placeholdersrc={'/default-image.png'}
+              placeholderSrc={'/default-image.png'}
               effect="blur"
           />
         </div>
@@ -35,7 +35,7 @@ const CardList = forwardRef((props, ref) => {
               alt={post?.author?.display_name}
               loading='lazy'
               className='rounded-circle img-fluid'
-              placeholdersrc={'/default-image.png'}
+              placeholderSrc={'/default-image.png'}
               effect="blur"
               width={'28px'} 
               height={'28px'}
