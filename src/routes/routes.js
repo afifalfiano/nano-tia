@@ -10,17 +10,17 @@ const Routes = createBrowserRouter([
   {
     path: "/",
     element: <WrapInfo><App /></WrapInfo>,
-    errorElement: <ErrorPage />,
+    errorElement: <WrapInfo><ErrorPage /></WrapInfo>,
   },
   {
     path: '/post/:slug',
     element: <WrapInfo><DetailPost /></WrapInfo>,
-    errorElement: <ErrorPage />,
+    errorElement: <WrapInfo><ErrorPage /></WrapInfo>,
   },
   {
     path: '/favorit-articles',
     element: <WrapInfo><FavoritArticlesPage/></WrapInfo>,
-    errorElement: <ErrorPage />,
+    errorElement: <WrapInfo><ErrorPage /></WrapInfo>,
   }
 ]);
 
