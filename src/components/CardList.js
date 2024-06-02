@@ -30,8 +30,17 @@ const CardList = forwardRef((props, ref) => {
           <div className="card-body">
             <h5 className="card-title d-inline-block me-2">{post?.title}</h5>
             <div className="card-text m-0 text-secondary">
-              <img src={post?.author?.avatar_url} className="rounded-circle img-fluid me-1" alt={post?.author?.display_name} width={'28px'} height={'28px'} />
-              <span className="me-2">Author by {post?.author?.display_name}</span> |
+            <LazyLoadImage 
+              src={post?.author?.avatar_url}
+              alt={post?.author?.display_name}
+              loading='lazy'
+              className='rounded-circle img-fluid'
+              placeholdersrc={'/default-image.png'}
+              effect="blur"
+              width={'28px'} 
+              height={'28px'}
+            />
+              <span className="mx-2">Author by {post?.author?.display_name}</span> |
               <span className="text-muted mx-2"><small>{post.read_time} min read </small></span> | 
               <span  className='card-text mx-2 text-secondary m-0'><small>Last updated: {convertDate(post?.date_gmt)}</small></span>
             </div>
