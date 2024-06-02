@@ -2,6 +2,8 @@ import { Nav, PayWallContent, Seo, withPayWall } from '../components';
 import { useEffect, useRef, useState } from 'react';
 import data from '../mocks/data.json';
 import { createPortal } from 'react-dom';
+import { addToFavorit, selectFavoritArticles, removeFromFavorit } from '../store/features/favorit-articles/favoritArticlesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const DetailPost = ({
   ids,
@@ -15,6 +17,10 @@ const DetailPost = ({
   const [lazyPost, setLazyPost] = useState(post?.content?.slice(0, 2000));
   const [showModal, setShowModal] = useState(false);
 
+  const {articles} = useSelector(selectFavoritArticles);
+  const dispatch = useDispatch()
+  const [isAddedFavorit, setIsAddedFavorit] = useState(articles.some(item => +item.id === +id));
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
@@ -22,7 +28,7 @@ const DetailPost = ({
   useEffect(() => {
     scrollToTop();
   }, [])
-
+  
   useEffect(() => {
     if (limitReached) {
       console.log('Your have reach the limit of read. Please subscribe...');
@@ -65,6 +71,22 @@ const DetailPost = ({
       infiniteScrollContent();
     }
   }
+
+  const doAddToFavorit = () => {
+    if (!isAddedFavorit) {
+      dispatch(addToFavorit({post}));
+    }
+  }
+
+  const doRemoveFromFavorit = () => {
+    if (isAddedFavorit) {
+      dispatch(removeFromFavorit({post}))
+    }
+  }
+
+  useEffect(() => {
+    setIsAddedFavorit(articles.some(item => +item.id === +id))
+  }, [articles])
   
 
   return (
@@ -79,8 +101,7 @@ const DetailPost = ({
         url={post?.link}
         prioritizeSeoTags={true}
         />
-      <Nav />
-
+      {!isAddedFavorit ? <button onClick={() => doAddToFavorit()}>Add to Favorit</button> : <button type="button" onClick={() => doRemoveFromFavorit()}>Remove from Favorit</button>}
       <p>Detail Post {post?.title} {id}</p>
       <p>Total Current Limit: {total}</p>
       <p>Ids: {JSON.stringify(ids)}</p>

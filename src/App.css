@@ -27,3 +27,17 @@
   background-color: red;
   color: #FFF;
 }
+
+.total-favorit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: blue;
+  color: #FFF;
+}
+
+.wrap-nav {
+  position: relative;
+  top: 50px;
+}

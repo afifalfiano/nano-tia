@@ -62,7 +62,7 @@ const Home = () => {
   }
 
   return (
-    <div style={{padding: '32px'}}>
+    <div style={{padding: '64px 32px'}}>
       <Seo
       title="Nano TIA"
       description="Nano TIA"
@@ -72,7 +72,6 @@ const Home = () => {
       canonical="/"
       prioritizeSeoTags={true}
       />
-      <Nav />
       <p>Home Page</p>
       {responseLocal?.map((post, idx) => {
         return (

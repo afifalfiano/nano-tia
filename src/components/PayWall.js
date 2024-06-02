@@ -14,7 +14,7 @@ const withPayWall = (WrappedComponent) => {
     const dispatch = useDispatch()
 
     const decrementReadLimit = () => {
-      const payload = {id: id};
+      const payload = {id: +id};
       dispatch(decrementLimitById(payload));
     }
 
