@@ -3,13 +3,18 @@ import { selectFavoritArticles } from '../store/features/favorit-articles/favori
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useNavigate } from 'react-router-dom';
 import { Seo } from '../components';
+import { flushSync } from 'react-dom';
 
 const FavoritArticlesPage = () => {
   const {articles} = useSelector(selectFavoritArticles);
   const navigate = useNavigate();
   const goToDetail = (post) => {
     const {id, slug} = post;
-    navigate(`/post/${slug}?id=${id}`);
+    document.startViewTransition(() => {
+      flushSync(() => {
+        navigate(`/post/${slug}?id=${id}`);
+      });
+    });
   }
 
   return (

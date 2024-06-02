@@ -2,7 +2,8 @@ import { useSelector } from "react-redux"
 import { selectReadLimit } from "../store/features/read-limit/readLimitSlice"
 import { selectFavoritArticles } from "../store/features/favorit-articles/favoritArticlesSlice";
 import { useNavigate } from "react-router-dom";
-import Nav from "./Nav";
+import NavLink from "./NavLink";
+import { flushSync } from "react-dom";
 
 
 const WrapInfo = ({children}) => {
@@ -11,7 +12,11 @@ const WrapInfo = ({children}) => {
   const navigate = useNavigate();
 
   const goToFavoritPage = () => {
-    navigate('/favorit-articles');
+    document.startViewTransition(() => {
+      flushSync(() => {
+        navigate('/favorit-articles');
+      });
+    });
   }
   return (
     <div>
@@ -20,7 +25,8 @@ const WrapInfo = ({children}) => {
         <span onClick={() => goToFavoritPage()}>Go to Favorit Page</span>
       </div>
       <div className="wrap-nav">
-        <Nav />
+        <NavLink to={'/'}>Home</NavLink>
+        <NavLink to={'/favorit-articles'}>Favorit Articles</NavLink>
       </div>
       {children}
       <div className="total-limit-read">

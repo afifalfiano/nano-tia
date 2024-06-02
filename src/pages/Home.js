@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import {removeDuplicate} from '../utils';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useNavigate } from 'react-router-dom';
+import { flushSync } from 'react-dom';
 
 const Home = () => {
   // const { data: datas, error, isLoading } = useGetPostListsQuery({page: 1, perPage: 20});
@@ -58,7 +59,11 @@ const Home = () => {
   const navigate = useNavigate();
   const goToDetail = (post) => {
     const {id, slug} = post;
-    navigate(`/post/${slug}?id=${id}`);
+    document.startViewTransition(() => {
+      flushSync(() => {
+        navigate(`/post/${slug}?id=${id}`);
+      });
+    });
   }
 
   return (
@@ -85,7 +90,7 @@ const Home = () => {
                   alt={post.title}
                   loading='lazy'
                   width={600} height={400}
-                  placeholdersrc={'default-image.png'}
+                  placeholdersrc={'/default-image.png'}
                   effect="blur"
               />
             </div>
