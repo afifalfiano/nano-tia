@@ -16,7 +16,6 @@ export const favoritArticles = createSlice({
     },
     removeFromFavorit: (state, action) => {
       const idx = state.articles.findIndex(item => +item.id === +action?.payload?.post?.id);
-      console.log(idx)
       if (idx > -1) {
         state.articles.splice(idx, 1);          
       }

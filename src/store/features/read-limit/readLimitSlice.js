@@ -18,9 +18,13 @@ export const readLimit = createSlice({
         }
       }
     },
+    reset: (state) => {
+      state.total = 5;
+      state.ids = []
+    }
   },
 })
 
-export const { decrementLimitById } = readLimit.actions
+export const { decrementLimitById, reset } = readLimit.actions
 export const selectReadLimit = (state) => state.readLimit;
 export default readLimit.reducer

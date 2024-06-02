@@ -15,8 +15,8 @@ const Comment = ({post}) => {
             <div className='py-2'>
             <div>
               <img src={comment?.author?.avatar_url} alt={comment?.author?.display_name} className='img-responsive rounded-circle me-2'/>
-              <span className='pe-2'>{comment?.author?.display_name}</span>
-              <span>{convertDate(comment?.author?.date_gmt)}</span>
+              <span className='pe-2 fw-semibold'>{comment?.author?.display_name}</span>
+              <span className='text-secondary'>{convertDate(comment?.author?.date_gmt)}</span>
             </div>
             <div className="border border-secondary mt-2 rounded-3 p-2" dangerouslySetInnerHTML={{ __html: comment?.content}}></div>
             </div>
