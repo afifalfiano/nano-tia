@@ -1,13 +1,13 @@
 import { CardList, Seo } from '../components';
-// import { useGetPostListsQuery } from '../services/list-articles';
+import { useGetPostListsQuery } from '../services/list-articles';
 import data from '../mocks/data.json';
 import { useEffect, useRef, useState } from 'react';
 import {removeDuplicate} from '../utils';
 import useNavigateWithTransition from '../hooks/useNavigateWithTransitions';
 
 const Home = () => {
-  // const { data: datas, error, isLoading } = useGetPostListsQuery({page: 1, perPage: 20});
-  // console.log(datas, error, isLoading);
+  const { data: datas, error, isLoading } = useGetPostListsQuery({page: 1, perPage: 20});
+  console.log(datas, error, isLoading);
   const [response, setResponse] = useState(data || []);
   const [responseLocal, setResponseLocal] = useState([...response?.posts?.slice(0, 10)] || []);
   const refTarget = useRef(null);

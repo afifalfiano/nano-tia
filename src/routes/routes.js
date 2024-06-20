@@ -1,10 +1,32 @@
 import App from '../App';
-import DetailPost from '../pages/DetailPost';
+import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from '../pages/Error';
 import { WrapInfo } from '../components';
-import FavoritArticlesPage from '../pages/FavoritArticlesPage';
+import { Suspense } from 'react';
 
+const LazyDetailPost = React.lazy(() => import('../pages/DetailPost'));
+const LazyFavoritArticlesPage = React.lazy(() => import('../pages/FavoritArticlesPage'));
+
+const LazyDetailPostWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WrapInfo>
+        <LazyDetailPost/>
+      </WrapInfo>
+    </Suspense>
+  )
+}
+
+const LazyFavoritArticlesPageWrapper = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WrapInfo>
+        <LazyFavoritArticlesPage/>
+      </WrapInfo>
+    </Suspense>
+  )
+}
 
 const Routes = createBrowserRouter([
   {
@@ -14,12 +36,12 @@ const Routes = createBrowserRouter([
   },
   {
     path: '/post/:slug',
-    element: <WrapInfo><DetailPost /></WrapInfo>,
+    element: <LazyDetailPostWrapper />,
     errorElement: <WrapInfo><ErrorPage /></WrapInfo>,
   },
   {
     path: '/favorit-articles',
-    element: <WrapInfo><FavoritArticlesPage/></WrapInfo>,
+    element: <LazyFavoritArticlesPageWrapper />,
     errorElement: <WrapInfo><ErrorPage /></WrapInfo>,
   }
 ]);
