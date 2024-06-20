@@ -21,6 +21,7 @@ The project for showing articles about technology. Here, I build a several featu
 * Lazy load images and component
 * Add mark/favorit for the article that you like it
 * State management using react-redux.
+* Meta tags to improve SEO.
 * More ...
 
 ## Libraries
@@ -119,3 +120,6 @@ There are several libraries in this project:
 * Paywall
 
   ![1717324196765](image/README/1717324196765.png)
+* Meta Tags
+
+  ![1717324196761](image/README/1717324196761.png)
